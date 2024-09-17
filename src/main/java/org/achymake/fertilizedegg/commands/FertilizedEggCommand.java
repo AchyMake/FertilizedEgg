@@ -27,7 +27,7 @@ public class FertilizedEggCommand implements CommandExecutor, TabCompleter {
             } else if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("reload")) {
                     getInstance().reload();
-                    getMessage().send(player, "&6Players:&f reloaded");
+                    getMessage().send(player, "&6FertilizedEgg:&f reloaded");
                     return true;
                 }
             }
@@ -38,7 +38,7 @@ public class FertilizedEggCommand implements CommandExecutor, TabCompleter {
             } else if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("reload")) {
                     getInstance().reload();
-                    getMessage().send(consoleCommandSender, "Players: reloaded");
+                    getMessage().send(consoleCommandSender, "FertilizedEgg: reloaded");
                     return true;
                 }
             }

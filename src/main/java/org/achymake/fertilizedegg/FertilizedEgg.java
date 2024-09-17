@@ -58,6 +58,14 @@ public final class FertilizedEgg extends JavaPlugin {
             } catch (IOException | InvalidConfigurationException e) {
                 getMessage().sendLog(Level.WARNING, e.getMessage());
             }
+            if (!getConfig().isInt("decorated-pot.timer")) {
+                getConfig().set("decorated-pot.timer", 300);
+                try {
+                    getConfig().save(file);
+                } catch (IOException e) {
+                    getMessage().sendLog(Level.WARNING, e.getMessage());
+                }
+            }
         } else {
             getConfig().options().copyDefaults(true);
             try {

@@ -59,7 +59,7 @@ public class PlayerInteract implements Listener {
                     summonChicken(decoratedPot.getLocation());
                     schedule(decoratedPot);
                 }
-            }, 20 * 300).getTaskId();
+            }, 20 * getInstance().getConfig().getInt("decorated-pot.timer")).getTaskId();
             getInstance().getDecoratedPotTasks().put(decoratedPot, taskID);
         }
     }

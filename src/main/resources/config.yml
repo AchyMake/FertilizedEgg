@@ -1,1 +1,3 @@
 notify-update: true
+decorated-pot:
+  timer: 300
