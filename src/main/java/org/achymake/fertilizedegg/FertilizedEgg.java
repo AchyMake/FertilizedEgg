@@ -3,6 +3,7 @@ package org.achymake.fertilizedegg;
 import org.achymake.fertilizedegg.commands.FertilizedEggCommand;
 import org.achymake.fertilizedegg.data.Message;
 import org.achymake.fertilizedegg.handlers.ScheduleHandler;
+import org.achymake.fertilizedegg.listeners.BlockBreak;
 import org.achymake.fertilizedegg.listeners.CreatureSpawn;
 import org.achymake.fertilizedegg.listeners.PlayerInteract;
 import org.achymake.fertilizedegg.listeners.PlayerJoin;
@@ -46,6 +47,7 @@ public final class FertilizedEgg extends JavaPlugin {
         new FertilizedEggCommand();
     }
     private void events() {
+        new BlockBreak();
         new CreatureSpawn();
         new PlayerInteract();
         new PlayerJoin();
@@ -57,14 +59,6 @@ public final class FertilizedEgg extends JavaPlugin {
                 getConfig().load(file);
             } catch (IOException | InvalidConfigurationException e) {
                 getMessage().sendLog(Level.WARNING, e.getMessage());
-            }
-            if (!getConfig().isInt("decorated-pot.timer")) {
-                getConfig().set("decorated-pot.timer", 300);
-                try {
-                    getConfig().save(file);
-                } catch (IOException e) {
-                    getMessage().sendLog(Level.WARNING, e.getMessage());
-                }
             }
         } else {
             getConfig().options().copyDefaults(true);
