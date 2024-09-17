@@ -1,0 +1,17 @@
+name: FertilizedEgg
+version: '${project.version}'
+main: org.achymake.fertilizedegg.FertilizedEgg
+api-version: '1.21'
+prefix: '${project.name}'
+load: STARTUP
+author: AchyMake
+description: '${project.description}'
+commands:
+  fertilizedegg:
+    description: main command
+    permission: fertilizedegg.command.fertilizedegg
+    permission-message: You do not have the permission to execute the command
+permissions:
+  fertilizedegg.command.fertilizedegg:
+    description: message
+    default: op
