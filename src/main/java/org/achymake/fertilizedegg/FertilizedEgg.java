@@ -3,10 +3,7 @@ package org.achymake.fertilizedegg;
 import org.achymake.fertilizedegg.commands.FertilizedEggCommand;
 import org.achymake.fertilizedegg.data.Message;
 import org.achymake.fertilizedegg.handlers.ScheduleHandler;
-import org.achymake.fertilizedegg.listeners.BlockBreak;
-import org.achymake.fertilizedegg.listeners.CreatureSpawn;
-import org.achymake.fertilizedegg.listeners.PlayerInteract;
-import org.achymake.fertilizedegg.listeners.PlayerJoin;
+import org.achymake.fertilizedegg.listeners.*;
 import org.bukkit.block.DecoratedPot;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.plugin.PluginManager;
@@ -48,6 +45,7 @@ public final class FertilizedEgg extends JavaPlugin {
     private void events() {
         new BlockBreak();
         new CreatureSpawn();
+        new FertilizedSpawn();
         new PlayerInteract();
         new PlayerJoin();
     }

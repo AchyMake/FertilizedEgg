@@ -1,6 +1,7 @@
 package org.achymake.fertilizedegg.listeners;
 
 import org.achymake.fertilizedegg.FertilizedEgg;
+import org.achymake.fertilizedegg.event.FertilizedSpawnEvent;
 import org.achymake.fertilizedegg.handlers.ScheduleHandler;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,9 +12,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.PluginManager;
 
 import java.util.Random;
 
@@ -24,8 +25,11 @@ public class PlayerInteract implements Listener {
     private ScheduleHandler getScheduler() {
         return getInstance().getScheduleHandler();
     }
+    private PluginManager getManager() {
+        return getInstance().getManager();
+    }
     public PlayerInteract() {
-        getInstance().getManager().registerEvents(this, getInstance());
+        getManager().registerEvents(this, getInstance());
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerInteract(PlayerInteractEvent event) {
@@ -67,9 +71,7 @@ public class PlayerInteract implements Listener {
     private void summonChicken(Location location) {
         var random = new Random().nextInt(0, 100);
         if (random >= 50) {
-            var chicken = (Chicken) location.getWorld().spawnEntity(location.add(0.5, 1, 0.5), EntityType.CHICKEN);
-            chicken.setBaby();
-            getInstance().getManager().callEvent(new CreatureSpawnEvent(chicken, CreatureSpawnEvent.SpawnReason.DEFAULT));
+            new FertilizedSpawnEvent((Chicken) location.getWorld().spawnEntity(location.add(0.5, 1, 0.5), EntityType.CHICKEN));
         }
     }
     private boolean isEgg(ItemStack itemStack) {

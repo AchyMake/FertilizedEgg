@@ -1,25 +1,26 @@
 package org.achymake.fertilizedegg.listeners;
 
 import org.achymake.fertilizedegg.FertilizedEgg;
+import org.achymake.fertilizedegg.event.FertilizedSpawnEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.plugin.PluginManager;
 
-public class CreatureSpawn implements Listener {
+public class FertilizedSpawn implements Listener {
     private FertilizedEgg getInstance() {
         return FertilizedEgg.getInstance();
     }
     private PluginManager getManager() {
         return getInstance().getManager();
     }
-    public CreatureSpawn() {
+    public FertilizedSpawn() {
         getManager().registerEvents(this, getInstance());
     }
-    @EventHandler(priority = EventPriority.NORMAL)
-    public void onCreatureSpawn(CreatureSpawnEvent event) {
-        if (!event.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.EGG))return;
-        event.setCancelled(true);
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onFertilizedSpawn(FertilizedSpawnEvent event) {
+        if (event.isCancelled()) {
+            event.getChicken().remove();
+        } else event.getChicken().setBaby();
     }
 }

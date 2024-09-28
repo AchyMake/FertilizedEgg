@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.plugin.PluginManager;
 
 public class PlayerJoin implements Listener {
     private FertilizedEgg getInstance() {
@@ -14,8 +15,11 @@ public class PlayerJoin implements Listener {
     private UpdateChecker getUpdateChecker() {
         return getInstance().getUpdateChecker();
     }
+    private PluginManager getManager() {
+        return getInstance().getManager();
+    }
     public PlayerJoin() {
-        getInstance().getManager().registerEvents(this, getInstance());
+        getManager().registerEvents(this, getInstance());
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerJoin(PlayerJoinEvent event) {

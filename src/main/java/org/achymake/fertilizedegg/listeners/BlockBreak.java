@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.plugin.PluginManager;
 
 public class BlockBreak implements Listener {
     private FertilizedEgg getInstance() {
@@ -15,8 +16,11 @@ public class BlockBreak implements Listener {
     private ScheduleHandler getScheduler() {
         return getInstance().getScheduleHandler();
     }
+    private PluginManager getManager() {
+        return getInstance().getManager();
+    }
     public BlockBreak() {
-        getInstance().getManager().registerEvents(this, getInstance());
+        getManager().registerEvents(this, getInstance());
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onBlockBreak(BlockBreakEvent event) {
