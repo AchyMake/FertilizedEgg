@@ -1,3 +1,4 @@
 notify-update: true
 decorated-pot:
   timer: 300
+chunk-limit: 8

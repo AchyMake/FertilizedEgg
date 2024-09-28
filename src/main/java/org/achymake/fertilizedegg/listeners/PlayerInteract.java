@@ -1,7 +1,6 @@
 package org.achymake.fertilizedegg.listeners;
 
 import org.achymake.fertilizedegg.FertilizedEgg;
-import org.achymake.fertilizedegg.event.FertilizedSpawnEvent;
 import org.achymake.fertilizedegg.handlers.ScheduleHandler;
 import org.bukkit.Material;
 import org.bukkit.block.DecoratedPot;
@@ -15,6 +14,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class PlayerInteract implements Listener {
@@ -30,7 +30,7 @@ public class PlayerInteract implements Listener {
     public PlayerInteract() {
         getManager().registerEvents(this, getInstance());
     }
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK))return;
         if (event.getClickedBlock() == null)return;
@@ -62,7 +62,20 @@ public class PlayerInteract implements Listener {
                     var random = new Random().nextInt(0, 100);
                     if (random >= 50) {
                         var chicken = (Chicken) location.getWorld().spawnEntity(location.add(0.5, 1, 0.5), EntityType.CHICKEN);
-                        new FertilizedSpawnEvent(decoratedPot, chicken);
+                        chicken.setBaby();
+                        var chunkLimit = getInstance().getConfig().getInt("chunk-limit");
+                        if (chunkLimit > 0) {
+                            var listed = new ArrayList<Chicken>();
+                            for (var chunkEntities : decoratedPot.getLocation().getChunk().getEntities()) {
+                                if (chunkEntities.getType().equals(EntityType.CHICKEN)) {
+                                    listed.add(chicken);
+                                }
+                            }
+                            if (listed.size() >= chunkLimit) {
+                                chicken.remove();
+                            }
+                            listed.clear();
+                        }
                     }
                     schedule(decoratedPot);
                 }

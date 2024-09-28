@@ -19,7 +19,8 @@ public class CreatureSpawn implements Listener {
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onCreatureSpawn(CreatureSpawnEvent event) {
-        if (!event.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.EGG))return;
-        event.setCancelled(true);
+        if (event.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.EGG) || event.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.DISPENSE_EGG)) {
+            event.setCancelled(true);
+        }
     }
 }
