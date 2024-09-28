@@ -3,11 +3,8 @@ package org.achymake.fertilizedegg.listeners;
 import org.achymake.fertilizedegg.FertilizedEgg;
 import org.achymake.fertilizedegg.event.FertilizedSpawnEvent;
 import org.achymake.fertilizedegg.handlers.ScheduleHandler;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.DecoratedPot;
-import org.bukkit.entity.Chicken;
-import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -61,19 +58,14 @@ public class PlayerInteract implements Listener {
                 public void run() {
                     getInstance().getDecoratedPotTasks().remove(decoratedPot);
                     egg.setAmount(egg.getAmount() - 1);
-                    summonChicken(decoratedPot.getLocation());
+                    var random = new Random().nextInt(0, 100);
+                    if (random >= 50) {
+                        new FertilizedSpawnEvent(decoratedPot);
+                    }
                     schedule(decoratedPot);
                 }
             }, 20 * getInstance().getConfig().getInt("decorated-pot.timer")).getTaskId();
             getInstance().getDecoratedPotTasks().put(decoratedPot, taskID);
-        }
-    }
-    private void summonChicken(Location location) {
-        var random = new Random().nextInt(0, 100);
-        if (random >= 50) {
-            var chicken = (Chicken) location.getWorld().spawnEntity(location.add(0.5, 1, 0.5), EntityType.CHICKEN);
-            chicken.setBaby();
-            new FertilizedSpawnEvent(chicken);
         }
     }
     private boolean isEgg(ItemStack itemStack) {
