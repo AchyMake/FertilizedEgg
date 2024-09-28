@@ -5,6 +5,8 @@ import org.achymake.fertilizedegg.event.FertilizedSpawnEvent;
 import org.achymake.fertilizedegg.handlers.ScheduleHandler;
 import org.bukkit.Material;
 import org.bukkit.block.DecoratedPot;
+import org.bukkit.entity.Chicken;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -28,7 +30,7 @@ public class PlayerInteract implements Listener {
     public PlayerInteract() {
         getManager().registerEvents(this, getInstance());
     }
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK))return;
         if (event.getClickedBlock() == null)return;
@@ -36,16 +38,14 @@ public class PlayerInteract implements Listener {
         if (block.getState() instanceof DecoratedPot decoratedPot) {
             var player = event.getPlayer();
             var heldItem = player.getInventory().getItemInMainHand();
-            if (isEgg(heldItem)) {
-                if (!getInstance().getDecoratedPotTasks().containsKey(decoratedPot)) {
-                    getScheduler().runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            schedule(decoratedPot);
-                        }
-                    }, 0);
+            if (!isEgg(heldItem))return;
+            if (getInstance().getDecoratedPotTasks().containsKey(decoratedPot))return;
+            getScheduler().runLater(new Runnable() {
+                @Override
+                public void run() {
+                    schedule(decoratedPot);
                 }
-            }
+            }, 0);
         }
     }
     private void schedule(DecoratedPot decoratedPot) {
@@ -53,6 +53,7 @@ public class PlayerInteract implements Listener {
         var eggMaterial = Material.EGG;
         var egg = decoratedPot.getInventory().getItem(decoratedPot.getInventory().first(eggMaterial));
         if (egg != null) {
+            var location = decoratedPot.getLocation();
             var taskID = getScheduler().runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -60,7 +61,8 @@ public class PlayerInteract implements Listener {
                     egg.setAmount(egg.getAmount() - 1);
                     var random = new Random().nextInt(0, 100);
                     if (random >= 50) {
-                        new FertilizedSpawnEvent(decoratedPot);
+                        var chicken = (Chicken) location.getWorld().spawnEntity(location.add(0.5, 1, 0.5), EntityType.CHICKEN);
+                        new FertilizedSpawnEvent(decoratedPot, chicken);
                     }
                     schedule(decoratedPot);
                 }

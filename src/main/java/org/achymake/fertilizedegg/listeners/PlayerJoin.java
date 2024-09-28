@@ -21,7 +21,7 @@ public class PlayerJoin implements Listener {
     public PlayerJoin() {
         getManager().registerEvents(this, getInstance());
     }
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoin(PlayerJoinEvent event) {
         getUpdateChecker().getUpdate(event.getPlayer());
     }

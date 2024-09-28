@@ -21,7 +21,7 @@ public final class FertilizedEgg extends JavaPlugin {
     private UpdateChecker updateChecker;
     private final Map<DecoratedPot, Integer> decoratedPotTasks = new HashMap<>();
     @Override
-    public void onEnable() {
+    public void onLoad() {
         instance = this;
         message = new Message();
         scheduleHandler = new ScheduleHandler();
@@ -29,6 +29,9 @@ public final class FertilizedEgg extends JavaPlugin {
         commands();
         events();
         reload();
+    }
+    @Override
+    public void onEnable() {
         sendInfo("Enabled for " + getMinecraftProvider() + " " + getMinecraftVersion());
         getUpdateChecker().getUpdate();
     }
