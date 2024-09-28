@@ -18,11 +18,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class FertilizedEgg extends JavaPlugin {
-    private final Map<DecoratedPot, Integer> decoratedPotTasks = new HashMap<>();
     private static FertilizedEgg instance;
-    private static Message message;
-    private static ScheduleHandler scheduleHandler;
-    private static UpdateChecker updateChecker;
+    private Message message;
+    private ScheduleHandler scheduleHandler;
+    private UpdateChecker updateChecker;
+    private final Map<DecoratedPot, Integer> decoratedPotTasks = new HashMap<>();
     @Override
     public void onEnable() {
         instance = this;
