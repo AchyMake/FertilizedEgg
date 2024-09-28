@@ -19,8 +19,7 @@ public class FertilizedSpawn implements Listener {
     }
     @EventHandler(priority = EventPriority.MONITOR)
     public void onFertilizedSpawn(FertilizedSpawnEvent event) {
-        if (event.isCancelled()) {
-            event.getChicken().remove();
-        } else event.getChicken().setBaby();
+        if (!event.isCancelled())return;
+        event.getChicken().remove();
     }
 }

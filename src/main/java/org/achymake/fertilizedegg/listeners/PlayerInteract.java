@@ -71,7 +71,9 @@ public class PlayerInteract implements Listener {
     private void summonChicken(Location location) {
         var random = new Random().nextInt(0, 100);
         if (random >= 50) {
-            new FertilizedSpawnEvent((Chicken) location.getWorld().spawnEntity(location.add(0.5, 1, 0.5), EntityType.CHICKEN));
+            var chicken = (Chicken) location.getWorld().spawnEntity(location.add(0.5, 1, 0.5), EntityType.CHICKEN);
+            chicken.setBaby();
+            new FertilizedSpawnEvent(chicken);
         }
     }
     private boolean isEgg(ItemStack itemStack) {
