@@ -6,11 +6,12 @@
 
     <groupId>org.achymake</groupId>
     <artifactId>FertilizedEgg</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <packaging>jar</packaging>
 
     <name>FertilizedEgg</name>
     <description>Provides Fertilized Egg</description>
+    <url>https://github.com/AchyMake/FertilizedEgg</url>
 
     <properties>
         <java.version>21</java.version>

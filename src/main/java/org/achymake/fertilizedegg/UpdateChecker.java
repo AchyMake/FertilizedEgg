@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Scanner;
 import java.util.function.Consumer;
-import java.util.logging.Level;
 
 public class UpdateChecker {
     private FertilizedEgg getInstance() {
@@ -57,8 +56,8 @@ public class UpdateChecker {
                 public void run() {
                     getLatest((latest) -> {
                         if (!getVersion().equals(latest)) {
-                            getMessage().sendLog(Level.INFO, getName() + " has new update:");
-                            getMessage().sendLog(Level.INFO, "- https://www.spigotmc.org/resources/119650/");
+                            getInstance().sendInfo(getName() + " has new update:");
+                            getInstance().sendInfo("- https://www.spigotmc.org/resources/119650/");
                         }
                     });
                 }
@@ -75,7 +74,7 @@ public class UpdateChecker {
                 inputStream.close();
             }
         } catch (IOException e) {
-            getMessage().sendLog(Level.WARNING, e.getMessage());
+            getInstance().sendWarning(e.getMessage());
         }
     }
 }

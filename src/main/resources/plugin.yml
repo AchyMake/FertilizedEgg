@@ -6,6 +6,7 @@ prefix: '${project.name}'
 load: STARTUP
 author: AchyMake
 description: '${project.description}'
+website: '${project.url}'
 commands:
   fertilizedegg:
     description: main command
@@ -13,5 +14,8 @@ commands:
     permission-message: You do not have the permission to execute the command
 permissions:
   fertilizedegg.command.fertilizedegg:
+    description: message
+    default: op
+  fertilizedegg.event.join.update:
     description: message
     default: op

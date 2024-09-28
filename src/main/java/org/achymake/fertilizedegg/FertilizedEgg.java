@@ -16,7 +16,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 
 public final class FertilizedEgg extends JavaPlugin {
     private final Map<DecoratedPot, Integer> decoratedPotTasks = new HashMap<>();
@@ -33,7 +32,7 @@ public final class FertilizedEgg extends JavaPlugin {
         commands();
         events();
         reload();
-        getMessage().sendLog(Level.INFO, "Enabled for " + getMinecraftProvider() + " " + getMinecraftVersion());
+        sendInfo("Enabled for " + getMinecraftProvider() + " " + getMinecraftVersion());
         getUpdateChecker().getUpdate();
     }
     @Override
@@ -58,14 +57,14 @@ public final class FertilizedEgg extends JavaPlugin {
             try {
                 getConfig().load(file);
             } catch (IOException | InvalidConfigurationException e) {
-                getMessage().sendLog(Level.WARNING, e.getMessage());
+                sendWarning(e.getMessage());
             }
         } else {
             getConfig().options().copyDefaults(true);
             try {
                 getConfig().save(file);
             } catch (IOException e) {
-                getMessage().sendLog(Level.WARNING, e.getMessage());
+                sendWarning(e.getMessage());
             }
         }
     }
@@ -86,6 +85,12 @@ public final class FertilizedEgg extends JavaPlugin {
     }
     public static FertilizedEgg getInstance() {
         return instance;
+    }
+    public void sendInfo(String message) {
+        getLogger().info(message);
+    }
+    public void sendWarning(String message) {
+        getLogger().warning(message);
     }
     public String name() {
         return getDescription().getName();

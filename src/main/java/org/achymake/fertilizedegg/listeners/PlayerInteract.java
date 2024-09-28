@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -68,6 +69,7 @@ public class PlayerInteract implements Listener {
         if (random >= 50) {
             var chicken = (Chicken) location.getWorld().spawnEntity(location.add(0.5, 1, 0.5), EntityType.CHICKEN);
             chicken.setBaby();
+            getInstance().getManager().callEvent(new CreatureSpawnEvent(chicken, CreatureSpawnEvent.SpawnReason.DEFAULT));
         }
     }
     private boolean isEgg(ItemStack itemStack) {
